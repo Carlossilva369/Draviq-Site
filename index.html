@@ -1,0 +1,1089 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Draviq — Movimento constante. Crescimento real.</title>
+  <meta name="description" content="Tráfego pago, copy, funil e CRM integrados para donos de negócios em Boa Vista - RR que querem crescimento previsível. Fale com a Draviq no WhatsApp." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --navy:  #0D1F3C;
+      --black: #111111;
+      --blue:  #2D6BE4;
+      --white: #FFFFFF;
+      --gray:  #F4F6FA;
+      --muted: #6B7280;
+      --green: #25D366;
+      --green-h: #1ebe5a;
+      --transition: 0.3s ease;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      color: var(--black);
+      background: var(--white);
+      overflow-x: hidden;
+    }
+
+    /* ── REVEAL ── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(36px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+    .reveal-left  { opacity: 0; transform: translateX(-36px); transition: opacity 0.7s ease, transform 0.7s ease; }
+    .reveal-right { opacity: 0; transform: translateX(36px);  transition: opacity 0.7s ease, transform 0.7s ease; }
+    .reveal-left.visible, .reveal-right.visible { opacity: 1; transform: translateX(0); }
+
+    /* ── NAVBAR ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 5%;
+      height: 70px;
+      background: rgba(13,31,60,0.96);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      transition: box-shadow var(--transition);
+    }
+    nav.scrolled { box-shadow: 0 4px 32px rgba(0,0,0,0.35); }
+
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 0;
+      text-decoration: none;
+    }
+    .nav-logo img {
+      height: 40px;
+      width: auto;
+      display: block;
+    }
+    .nav-logo-text {
+      font-size: 1.65rem;
+      font-weight: 800;
+      color: var(--white);
+      letter-spacing: -0.5px;
+      line-height: 1;
+    }
+
+    .nav-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--green);
+      color: var(--white);
+      font-weight: 700;
+      font-size: 0.88rem;
+      padding: 10px 20px;
+      border-radius: 50px;
+      text-decoration: none;
+      white-space: nowrap;
+      transition: background var(--transition), transform var(--transition), box-shadow var(--transition);
+    }
+    .nav-cta:hover {
+      background: var(--green-h);
+      transform: translateY(-1px);
+      box-shadow: 0 6px 20px rgba(37,211,102,0.4);
+    }
+
+    /* ── HERO ── */
+    #hero {
+      min-height: 100vh;
+      background: var(--navy);
+      display: flex;
+      align-items: center;
+      position: relative;
+      overflow: hidden;
+      padding: 120px 5% 90px;
+    }
+
+    #hero::before {
+      content: '';
+      position: absolute;
+      width: 700px; height: 700px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(45,107,228,0.16) 0%, transparent 70%);
+      top: -180px; right: -180px;
+      pointer-events: none;
+    }
+    #hero::after {
+      content: '';
+      position: absolute;
+      width: 450px; height: 450px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(45,107,228,0.1) 0%, transparent 70%);
+      bottom: -100px; left: -100px;
+      pointer-events: none;
+    }
+
+    /* Grid lines decoration */
+    .hero-grid-deco {
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(45,107,228,0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(45,107,228,0.04) 1px, transparent 1px);
+      background-size: 60px 60px;
+      pointer-events: none;
+    }
+
+    .hero-inner {
+      position: relative;
+      z-index: 1;
+      max-width: 780px;
+      margin: 0 auto;
+      text-align: center;
+      width: 100%;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(45,107,228,0.14);
+      border: 1px solid rgba(45,107,228,0.3);
+      color: #90BBFF;
+      font-size: 0.78rem;
+      font-weight: 600;
+      padding: 6px 16px;
+      border-radius: 50px;
+      margin-bottom: 32px;
+      letter-spacing: 0.8px;
+      text-transform: uppercase;
+    }
+    .hero-badge-dot {
+      width: 7px; height: 7px;
+      border-radius: 50%;
+      background: var(--blue);
+      animation: dotPulse 2s infinite;
+    }
+    @keyframes dotPulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.4; transform: scale(1.5); }
+    }
+
+    .hero-title {
+      font-size: clamp(2.6rem, 6vw, 4.4rem);
+      font-weight: 800;
+      color: var(--white);
+      line-height: 1.08;
+      letter-spacing: -1.5px;
+      margin-bottom: 24px;
+    }
+    .hero-title .hi {
+      background: linear-gradient(135deg, #2D6BE4 0%, #90BBFF 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero-sub {
+      font-size: clamp(1rem, 2vw, 1.18rem);
+      color: rgba(255,255,255,0.6);
+      line-height: 1.75;
+      max-width: 560px;
+      margin: 0 auto 44px;
+    }
+
+    .hero-cta-wrap {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+
+    .btn-wa-hero {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: var(--green);
+      color: var(--white);
+      font-weight: 700;
+      font-size: 1.05rem;
+      padding: 17px 34px;
+      border-radius: 50px;
+      text-decoration: none;
+      transition: background var(--transition), transform var(--transition), box-shadow var(--transition);
+    }
+    .btn-wa-hero:hover {
+      background: var(--green-h);
+      transform: translateY(-3px);
+      box-shadow: 0 14px 40px rgba(37,211,102,0.4);
+    }
+
+    .btn-ghost {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: transparent;
+      color: rgba(255,255,255,0.75);
+      font-weight: 500;
+      font-size: 0.95rem;
+      padding: 16px 28px;
+      border-radius: 50px;
+      border: 1px solid rgba(255,255,255,0.2);
+      text-decoration: none;
+      transition: all var(--transition);
+    }
+    .btn-ghost:hover {
+      border-color: rgba(255,255,255,0.5);
+      color: var(--white);
+      background: rgba(255,255,255,0.05);
+      transform: translateY(-2px);
+    }
+
+    .hero-trust {
+      margin-top: 56px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 28px;
+      flex-wrap: wrap;
+    }
+    .trust-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: rgba(255,255,255,0.4);
+      font-size: 0.82rem;
+      font-weight: 500;
+    }
+    .trust-item svg { opacity: 0.5; }
+
+    /* ── SHARED ── */
+    section { width: 100%; }
+    .container { max-width: 1160px; margin: 0 auto; padding: 104px 5%; }
+
+    .sec-tag {
+      display: inline-block;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 1.8px;
+      text-transform: uppercase;
+      color: var(--blue);
+      margin-bottom: 14px;
+    }
+    .sec-title {
+      font-size: clamp(1.9rem, 4vw, 2.9rem);
+      font-weight: 800;
+      line-height: 1.14;
+      letter-spacing: -0.6px;
+      margin-bottom: 16px;
+    }
+    .sec-sub {
+      font-size: 1.05rem;
+      color: var(--muted);
+      line-height: 1.75;
+      max-width: 540px;
+    }
+    .sec-header { margin-bottom: 60px; }
+    .sec-header.center { text-align: center; }
+    .sec-header.center .sec-sub { margin: 0 auto; }
+
+    /* ── DOR ── */
+    #dor { background: var(--white); }
+
+    .dor-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+
+    .dor-card {
+      border: 1.5px solid #E5E7EB;
+      border-radius: 20px;
+      padding: 36px 28px;
+      transition: border-color var(--transition), box-shadow var(--transition), transform var(--transition);
+      position: relative;
+    }
+    .dor-card:hover {
+      border-color: var(--blue);
+      box-shadow: 0 12px 44px rgba(45,107,228,0.1);
+      transform: translateY(-4px);
+    }
+
+    .dor-icon-wrap {
+      width: 52px; height: 52px;
+      border-radius: 14px;
+      background: rgba(45,107,228,0.07);
+      display: flex; align-items: center; justify-content: center;
+      margin-bottom: 20px;
+    }
+    .dor-card h3 {
+      font-size: 1.02rem;
+      font-weight: 700;
+      line-height: 1.4;
+      margin-bottom: 10px;
+      color: var(--black);
+    }
+    .dor-card p {
+      font-size: 0.9rem;
+      color: var(--muted);
+      line-height: 1.65;
+    }
+
+    /* ── SOLUÇÃO ── */
+    #solucao { background: var(--navy); }
+
+    .solucao-inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: center;
+    }
+
+    .solucao-left .sec-tag { color: #90BBFF; }
+    .solucao-left .sec-title { color: var(--white); }
+    .solucao-left .sec-sub { color: rgba(255,255,255,0.55); max-width: 100%; margin-bottom: 36px; }
+
+    .solucao-pilares {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+    .pilar {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.09);
+      border-radius: 12px;
+      padding: 14px 16px;
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: rgba(255,255,255,0.85);
+      transition: border-color var(--transition), background var(--transition);
+    }
+    .pilar:hover {
+      border-color: rgba(45,107,228,0.5);
+      background: rgba(45,107,228,0.1);
+    }
+    .pilar-dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: var(--blue);
+      flex-shrink: 0;
+    }
+
+    .solucao-right {
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+
+    .sol-card {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 18px;
+      padding: 28px;
+      display: flex;
+      gap: 18px;
+      align-items: flex-start;
+      transition: border-color var(--transition), background var(--transition), transform var(--transition);
+    }
+    .sol-card:hover {
+      border-color: rgba(45,107,228,0.4);
+      background: rgba(45,107,228,0.07);
+      transform: translateX(4px);
+    }
+    .sol-icon {
+      flex-shrink: 0;
+      width: 48px; height: 48px;
+      border-radius: 13px;
+      background: rgba(45,107,228,0.18);
+      display: flex; align-items: center; justify-content: center;
+    }
+    .sol-card h3 {
+      font-size: 0.98rem;
+      font-weight: 700;
+      color: var(--white);
+      margin-bottom: 6px;
+    }
+    .sol-card p {
+      font-size: 0.86rem;
+      color: rgba(255,255,255,0.5);
+      line-height: 1.6;
+    }
+
+    /* ── COMO FUNCIONA ── */
+    #como { background: var(--gray); }
+
+    .steps-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0;
+      position: relative;
+    }
+    .steps-grid::before {
+      content: '';
+      position: absolute;
+      top: 35px;
+      left: 12.5%;
+      right: 12.5%;
+      height: 2px;
+      background: linear-gradient(90deg, var(--blue), #90BBFF);
+      z-index: 0;
+    }
+
+    .step {
+      text-align: center;
+      padding: 0 20px;
+      position: relative;
+      z-index: 1;
+    }
+    .step-num {
+      width: 70px; height: 70px;
+      border-radius: 50%;
+      background: var(--blue);
+      color: var(--white);
+      font-size: 1.1rem;
+      font-weight: 800;
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 24px;
+      box-shadow: 0 0 0 6px var(--gray), 0 0 0 8px rgba(45,107,228,0.2);
+      transition: transform var(--transition), box-shadow var(--transition);
+    }
+    .step:hover .step-num {
+      transform: scale(1.1);
+      box-shadow: 0 0 0 6px var(--gray), 0 8px 24px rgba(45,107,228,0.45);
+    }
+    .step-name {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--black);
+      margin-bottom: 10px;
+    }
+    .step-desc {
+      font-size: 0.88rem;
+      color: var(--muted);
+      line-height: 1.65;
+    }
+
+    .como-cta {
+      text-align: center;
+      margin-top: 60px;
+    }
+
+    .btn-wa {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: var(--green);
+      color: var(--white);
+      font-weight: 700;
+      font-size: 1rem;
+      padding: 16px 32px;
+      border-radius: 50px;
+      text-decoration: none;
+      transition: background var(--transition), transform var(--transition), box-shadow var(--transition);
+    }
+    .btn-wa:hover {
+      background: var(--green-h);
+      transform: translateY(-2px);
+      box-shadow: 0 12px 36px rgba(37,211,102,0.4);
+    }
+
+    /* ── PROVA SOCIAL ── */
+    #prova { background: var(--white); }
+
+    .depo-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+
+    .depo-card {
+      border: 1.5px solid #E5E7EB;
+      border-radius: 20px;
+      padding: 32px 28px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      transition: border-color var(--transition), box-shadow var(--transition), transform var(--transition);
+    }
+    .depo-card:hover {
+      border-color: var(--blue);
+      box-shadow: 0 12px 44px rgba(45,107,228,0.1);
+      transform: translateY(-4px);
+    }
+
+    .depo-stars {
+      display: flex;
+      gap: 4px;
+    }
+    .star {
+      width: 16px; height: 16px;
+      background: #FBBF24;
+      clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+    }
+
+    .depo-text {
+      font-size: 0.93rem;
+      color: #374151;
+      line-height: 1.7;
+      flex: 1;
+    }
+    .depo-text::before { content: '\201C'; }
+    .depo-text::after  { content: '\201D'; }
+
+    .depo-author {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding-top: 16px;
+      border-top: 1px solid #F3F4F6;
+    }
+    .depo-avatar {
+      width: 46px; height: 46px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--navy), var(--blue));
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--white);
+      flex-shrink: 0;
+    }
+    .depo-name {
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: var(--black);
+    }
+    .depo-company {
+      font-size: 0.8rem;
+      color: var(--muted);
+      margin-top: 2px;
+    }
+
+    /* ── CTA FINAL ── */
+    #cta-final {
+      background: var(--black);
+      text-align: center;
+    }
+
+    .cta-title {
+      font-size: clamp(2.1rem, 5vw, 3.4rem);
+      font-weight: 800;
+      color: var(--white);
+      letter-spacing: -1px;
+      margin-bottom: 16px;
+      line-height: 1.12;
+    }
+    .cta-title .hi {
+      background: linear-gradient(135deg, #2D6BE4, #90BBFF);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .cta-desc {
+      font-size: 1.08rem;
+      color: rgba(255,255,255,0.5);
+      margin-bottom: 44px;
+      line-height: 1.6;
+    }
+
+    .btn-wa-final {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      background: var(--green);
+      color: var(--white);
+      font-weight: 700;
+      font-size: 1.1rem;
+      padding: 20px 42px;
+      border-radius: 50px;
+      text-decoration: none;
+      transition: background var(--transition), transform var(--transition), box-shadow var(--transition);
+    }
+    .btn-wa-final:hover {
+      background: var(--green-h);
+      transform: translateY(-3px);
+      box-shadow: 0 16px 48px rgba(37,211,102,0.45);
+    }
+
+    .cta-sub {
+      display: block;
+      margin-top: 18px;
+      font-size: 0.85rem;
+      color: rgba(255,255,255,0.3);
+      font-weight: 500;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--navy);
+      border-top: 1px solid rgba(255,255,255,0.06);
+    }
+    .footer-inner {
+      max-width: 1160px;
+      margin: 0 auto;
+      padding: 64px 5% 40px;
+    }
+    .footer-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 48px;
+      padding-bottom: 44px;
+      border-bottom: 1px solid rgba(255,255,255,0.07);
+      flex-wrap: wrap;
+    }
+
+    .footer-brand { display: flex; flex-direction: column; gap: 10px; }
+    .footer-logo {
+      display: flex;
+      align-items: center;
+      gap: 0;
+    }
+    .footer-logo img { height: 36px; width: auto; display: block; }
+    .footer-logo-text {
+      font-size: 1.5rem;
+      font-weight: 800;
+      color: var(--white);
+      letter-spacing: -0.4px;
+      line-height: 1;
+    }
+    .footer-slogan {
+      font-size: 0.84rem;
+      color: rgba(255,255,255,0.38);
+      font-weight: 500;
+    }
+
+    .footer-links {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+    .footer-link {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 0.88rem;
+      color: rgba(255,255,255,0.5);
+      text-decoration: none;
+      transition: color var(--transition);
+    }
+    .footer-link:hover { color: var(--white); }
+    .footer-link svg { opacity: 0.6; flex-shrink: 0; }
+
+    .footer-bottom {
+      padding-top: 32px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .footer-copy {
+      font-size: 0.8rem;
+      color: rgba(255,255,255,0.22);
+    }
+
+    /* ── FLOAT WHATSAPP ── */
+    .float-wa-ring {
+      position: fixed;
+      bottom: 18px; right: 18px;
+      z-index: 998;
+      width: 78px; height: 78px;
+      border-radius: 50%;
+      border: 2.5px solid rgba(37,211,102,0.4);
+      animation: ringPulse 2.5s ease-out infinite;
+      pointer-events: none;
+    }
+    @keyframes ringPulse {
+      0%   { transform: scale(0.88); opacity: 1; }
+      100% { transform: scale(1.45); opacity: 0; }
+    }
+
+    .float-wa {
+      position: fixed;
+      bottom: 26px; right: 26px;
+      z-index: 999;
+      width: 62px; height: 62px;
+      border-radius: 50%;
+      background: var(--green);
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 6px 28px rgba(37,211,102,0.5);
+      text-decoration: none;
+      animation: floatBounce 3.2s ease-in-out infinite;
+      transition: transform var(--transition), box-shadow var(--transition);
+    }
+    .float-wa:hover {
+      transform: scale(1.13);
+      box-shadow: 0 10px 36px rgba(37,211,102,0.6);
+      animation: none;
+    }
+    @keyframes floatBounce {
+      0%, 100% { transform: translateY(0); }
+      50%       { transform: translateY(-6px); }
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 960px) {
+      .dor-grid        { grid-template-columns: 1fr; max-width: 480px; margin: 0 auto; }
+      .solucao-inner   { grid-template-columns: 1fr; gap: 48px; }
+      .solucao-right   { order: -1; }
+      .steps-grid      { grid-template-columns: 1fr 1fr; gap: 44px; }
+      .steps-grid::before { display: none; }
+      .depo-grid       { grid-template-columns: 1fr; max-width: 480px; margin: 0 auto; }
+      .footer-top      { flex-direction: column; }
+    }
+
+    @media (max-width: 600px) {
+      .container { padding: 80px 5%; }
+      nav { padding: 0 4%; }
+      .nav-logo-text { font-size: 1.4rem; }
+      .nav-cta span { display: none; }
+      .steps-grid { grid-template-columns: 1fr; }
+      .solucao-pilares { grid-template-columns: 1fr; }
+      .footer-bottom { flex-direction: column; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ══ NAVBAR ══ -->
+  <nav id="navbar">
+    <a href="#hero" class="nav-logo">
+      <img src="Draviq.png" alt="Draviq logo" />
+      <span class="nav-logo-text">raviq</span>
+    </a>
+    <a href="https://wa.me/5595991627622?text=Ol%C3%A1%2C%20vim%20pelo%20site%20da%20Draviq" target="_blank" rel="noopener" class="nav-cta">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
+      <span>Falar no WhatsApp</span>
+    </a>
+  </nav>
+
+  <!-- ══ HERO ══ -->
+  <section id="hero">
+    <div class="hero-grid-deco"></div>
+    <div class="hero-inner">
+      <div class="hero-badge reveal">
+        <span class="hero-badge-dot"></span>
+        Agência Digital · Boa Vista - RR
+      </div>
+      <h1 class="hero-title reveal">
+        Seu concorrente já<br>
+        está <span class="hi">dominando o digital.</span><br>
+        E você?
+      </h1>
+      <p class="hero-sub reveal">
+        Enquanto seu negócio depende de indicação, outro está aparecendo para os seus clientes todos os dias. A Draviq muda isso — com método, não achismo.
+      </p>
+      <div class="hero-cta-wrap reveal">
+        <a href="https://wa.me/5595991627622?text=Quero%20entender%20como%20a%20Draviq%20pode%20ajudar%20meu%20neg%C3%B3cio" target="_blank" rel="noopener" class="btn-wa-hero">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
+          Quero mudar isso agora
+        </a>
+        <a href="#como" class="btn-ghost">
+          Ver como funciona
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><polyline points="19 12 12 19 5 12"/></svg>
+        </a>
+      </div>
+      <div class="hero-trust reveal">
+        <div class="trust-item">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+          Conversa gratuita
+        </div>
+        <div class="trust-item">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+          Sem compromisso
+        </div>
+        <div class="trust-item">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+          Resposta rápida
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ DOR ══ -->
+  <section id="dor">
+    <div class="container">
+      <div class="sec-header">
+        <span class="sec-tag reveal">Você se identifica?</span>
+        <h2 class="sec-title reveal">Isso soa familiar?</h2>
+        <p class="sec-sub reveal">Se você respondeu sim para pelo menos um, existe um caminho direto para mudar esse cenário.</p>
+      </div>
+
+      <div class="dor-grid">
+
+        <div class="dor-card reveal">
+          <div class="dor-icon-wrap">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#2D6BE4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          </div>
+          <h3>Invisível no digital — seu concorrente aparece, você não</h3>
+          <p>O cliente procura no Google ou Instagram, encontra o concorrente e nunca chega até você. Não porque seu negócio é pior — mas porque ele simplesmente não aparece.</p>
+        </div>
+
+        <div class="dor-card reveal" style="transition-delay:0.12s">
+          <div class="dor-icon-wrap">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#2D6BE4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+          </div>
+          <h3>Já investiu em anúncio e não viu resultado</h3>
+          <p>Dinheiro foi, leads não vieram — ou vieram frios demais. Você tentou, não funcionou, e ficou a dúvida: "Será que isso funciona para o meu tipo de negócio?"</p>
+        </div>
+
+        <div class="dor-card reveal" style="transition-delay:0.24s">
+          <div class="dor-icon-wrap">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#2D6BE4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+          </div>
+          <h3>Não sabe de onde vêm seus clientes nem quanto vai faturar</h3>
+          <p>Todo mês é uma surpresa. Às vezes cheio, às vezes vazio. Sem previsibilidade não dá para contratar, crescer ou planejar. O negócio fica refém do acaso.</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ SOLUÇÃO ══ -->
+  <section id="solucao">
+    <div class="container">
+      <div class="solucao-inner">
+
+        <div class="solucao-left reveal-left">
+          <span class="sec-tag">O que a Draviq faz</span>
+          <h2 class="sec-title">Crescimento não é sorte.<br>É método.</h2>
+          <p class="sec-sub">Não entregamos relatório bonito e sumimos. Construímos a máquina de aquisição do seu negócio — do anúncio até o cliente pagando — e operamos ela junto com você, mês a mês.</p>
+          <div class="solucao-pilares" style="margin-top:36px">
+            <div class="pilar"><span class="pilar-dot"></span>Tráfego Pago</div>
+            <div class="pilar"><span class="pilar-dot"></span>Copy Estratégico</div>
+            <div class="pilar"><span class="pilar-dot"></span>Funil Completo</div>
+            <div class="pilar"><span class="pilar-dot"></span>CRM Integrado</div>
+          </div>
+        </div>
+
+        <div class="solucao-right reveal-right">
+          <div class="sol-card">
+            <div class="sol-icon">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#90BBFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+            </div>
+            <div>
+              <h3>Resultado antes de gastar R$1</h3>
+              <p>Antes de subir qualquer campanha, montamos a estratégia completa. Você sabe exatamente o que vai acontecer e por quê.</p>
+            </div>
+          </div>
+
+          <div class="sol-card">
+            <div class="sol-icon">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#90BBFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+            </div>
+            <div>
+              <h3>Do clique ao cliente fechado</h3>
+              <p>Tráfego, copy, landing page, follow-up e CRM conectados. Nenhum lead cai no esquecimento.</p>
+            </div>
+          </div>
+
+          <div class="sol-card">
+            <div class="sol-icon">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#90BBFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+            </div>
+            <div>
+              <h3>Crescimento previsível todo mês</h3>
+              <p>Com dados reais e otimização contínua, o seu faturamento para de ser uma aposta e começa a ser uma projeção.</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ COMO FUNCIONA ══ -->
+  <section id="como">
+    <div class="container">
+      <div class="sec-header center">
+        <span class="sec-tag reveal">Nosso processo</span>
+        <h2 class="sec-title reveal">Como funciona na prática</h2>
+        <p class="sec-sub reveal">4 etapas claras. Sem enrolação, sem jargão. Você entende tudo o que está acontecendo com o seu negócio.</p>
+      </div>
+
+      <div class="steps-grid">
+        <div class="step reveal" style="transition-delay:0s">
+          <div class="step-num">01</div>
+          <div class="step-name">Conversa</div>
+          <p class="step-desc">Entendemos seu negócio, seu mercado e onde estão as maiores oportunidades de crescimento agora.</p>
+        </div>
+        <div class="step reveal" style="transition-delay:0.15s">
+          <div class="step-num">02</div>
+          <div class="step-name">Estratégia</div>
+          <p class="step-desc">Montamos o plano completo antes de investir R$1 — campanha, funil, copy e CRM estruturados.</p>
+        </div>
+        <div class="step reveal" style="transition-delay:0.3s">
+          <div class="step-num">03</div>
+          <div class="step-name">Execução</div>
+          <p class="step-desc">Campanhas no ar com acompanhamento diário, otimizações em tempo real e total transparência.</p>
+        </div>
+        <div class="step reveal" style="transition-delay:0.45s">
+          <div class="step-num">04</div>
+          <div class="step-name">Resultado</div>
+          <p class="step-desc">Crescimento previsível e escalável todo mês — com dados, relatórios e reuniões de resultado.</p>
+        </div>
+      </div>
+
+      <div class="como-cta reveal">
+        <a href="https://wa.me/5595991627622?text=Quero%20entender%20como%20funciona%20o%20processo%20da%20Draviq" target="_blank" rel="noopener" class="btn-wa">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
+          Quero conhecer o processo
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ PROVA SOCIAL ══ -->
+  <section id="prova">
+    <div class="container">
+      <div class="sec-header center">
+        <span class="sec-tag reveal">Depoimentos</span>
+        <h2 class="sec-title reveal">O que nossos clientes dizem</h2>
+        <p class="sec-sub reveal">Resultados reais de empresários que decidiram parar de depender da sorte.</p>
+      </div>
+
+      <div class="depo-grid">
+
+        <div class="depo-card reveal">
+          <div class="depo-stars">
+            <div class="star"></div><div class="star"></div><div class="star"></div><div class="star"></div><div class="star"></div>
+          </div>
+          <p class="depo-text">Antes de trabalhar com a Draviq, o fluxo de clientes era muito baixo. Depois que eles entraram, o número de pessoas interessadas nos nossos produtos aumentou significativamente — e as vendas acompanharam. Foi a melhor decisão que tomamos para o negócio.</p>
+          <div class="depo-author">
+            <div class="depo-avatar">P</div>
+            <div>
+              <div class="depo-name">Pet Shop</div>
+              <div class="depo-company">Cliente Draviq · Aumento de clientes e vendas</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="depo-card reveal" style="transition-delay:0.12s">
+          <div class="depo-stars">
+            <div class="star"></div><div class="star"></div><div class="star"></div><div class="star"></div><div class="star"></div>
+          </div>
+          <p class="depo-text">Dependíamos 100% de indicação para conseguir pacientes novos. A Draviq criou criativos que chamaram atenção do público certo, aumentou o fluxo de pessoas no nosso WhatsApp e conseguimos vender muito mais sessões de fisioterapia. Hoje temos previsibilidade.</p>
+          <div class="depo-author">
+            <div class="depo-avatar">C</div>
+            <div>
+              <div class="depo-name">Clínica de Fisioterapia</div>
+              <div class="depo-company">Cliente Draviq · Independência de indicações</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="depo-card reveal" style="transition-delay:0.24s">
+          <div class="depo-stars">
+            <div class="star"></div><div class="star"></div><div class="star"></div><div class="star"></div><div class="star"></div>
+          </div>
+          <p class="depo-text">Vendemos um curso de operação de drone a R$5.000. Com a copy certa e o tráfego certo da Draviq, atraímos as pessoas certas e fechamos mais de 10 vendas vindas dos anúncios — investindo menos de R$1.500. O retorno foi surpreendente.</p>
+          <div class="depo-author">
+            <div class="depo-avatar">A</div>
+            <div>
+              <div class="depo-name">Empresa do Agro</div>
+              <div class="depo-company">Cliente Draviq · +10 vendas · ROI acima de 3x</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ CTA FINAL ══ -->
+  <section id="cta-final">
+    <div class="container" style="padding-top:120px;padding-bottom:120px;">
+      <h2 class="cta-title reveal">
+        Quanto tempo você ainda<br>vai deixar seu concorrente<br>
+        <span class="hi">crescer no seu lugar?</span>
+      </h2>
+      <p class="cta-desc reveal">
+        Uma conversa de 30 minutos pode mudar o rumo do seu negócio.<br>Sem compromisso. Sem pressão.
+      </p>
+      <a href="https://wa.me/5595991627622?text=Quero%20crescer%20com%20a%20Draviq" target="_blank" rel="noopener" class="btn-wa-final reveal">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
+        Quero crescer com a Draviq
+      </a>
+      <span class="cta-sub reveal">Conversa gratuita. Sem compromisso.</span>
+    </div>
+  </section>
+
+  <!-- ══ FOOTER ══ -->
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <div class="footer-logo">
+            <img src="Draviq.png" alt="Draviq logo" />
+            <span class="footer-logo-text">raviq</span>
+          </div>
+          <div class="footer-slogan">Movimento constante. Crescimento real.</div>
+        </div>
+        <div class="footer-links">
+          <a href="https://instagram.com/draviq.co" target="_blank" rel="noopener" class="footer-link">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+            @draviq.co
+          </a>
+          <a href="mailto:draviq.agencia@gmail.com" class="footer-link">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            draviq.agencia@gmail.com
+          </a>
+          <span class="footer-link" style="cursor:default;pointer-events:none">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            Boa Vista - RR · Atendemos todo o Brasil
+          </span>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <div class="footer-copy">© 2025 Draviq Agency. Todos os direitos reservados.</div>
+        <div class="footer-copy">Boa Vista - RR · Brasil</div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ══ FLOAT WHATSAPP ══ -->
+  <div class="float-wa-ring"></div>
+  <a href="https://wa.me/5595991627622?text=Ol%C3%A1%2C%20vim%20pelo%20site%20da%20Draviq" target="_blank" rel="noopener" class="float-wa" title="Falar no WhatsApp">
+    <svg width="30" height="30" viewBox="0 0 24 24" fill="#fff"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
+  </a>
+
+  <script>
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', () => {
+      navbar.classList.toggle('scrolled', window.scrollY > 20);
+    }, { passive: true });
+
+    const revealEls = document.querySelectorAll('.reveal, .reveal-left, .reveal-right');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+    revealEls.forEach(el => observer.observe(el));
+
+    document.querySelectorAll('a[href^="#"]').forEach(a => {
+      a.addEventListener('click', e => {
+        const target = document.querySelector(a.getAttribute('href'));
+        if (target) {
+          e.preventDefault();
+          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      });
+    });
+  </script>
+</body>
+</html>
