@@ -49,6 +49,35 @@
     .reveal-right { opacity: 0; transform: translateX(36px) scale(0.96);  transition: opacity 0.8s var(--ease-flow), transform 0.8s var(--ease-flow); transition-delay: calc(var(--i, 0) * 0.12s); }
     .reveal-left.visible, .reveal-right.visible { opacity: 1; transform: translateX(0) scale(1); }
 
+    /* ── FLOW BG — componente reutilizável de "fluxo contínuo", presente em toda seção ── */
+    /* 3 camadas de profundidade (curva + partículas via animateMotion), intensidade variável por seção */
+    .flow-bg {
+      position: absolute;
+      left: 0; right: 0; top: 50%;
+      height: 240px;
+      transform: translateY(-50%);
+      z-index: 0;
+      pointer-events: none;
+      overflow: hidden;
+    }
+    .flow-bg svg { width: 100%; height: 100%; display: block; overflow: visible; }
+    .flow-line { stroke: #1A3360; fill: none; }
+    .flow-line-1 { opacity: 0.5; }
+    .flow-line-2 { opacity: 0.35; }
+    .flow-line-3 { opacity: 0.2; }
+    .flow-dot { fill: #2D6BE4; }
+    .flow-dot-1 { opacity: 0.7; }
+    .flow-dot-2 { opacity: 0.55; }
+    .flow-dot-3 { opacity: 0.35; }
+
+    .flow-bg.theme-light .flow-line { stroke: #0D1F3C; }
+    .flow-bg.theme-light .flow-line-1 { opacity: 0.10; }
+    .flow-bg.theme-light .flow-line-2 { opacity: 0.07; }
+    .flow-bg.theme-light .flow-line-3 { opacity: 0.05; }
+    .flow-bg.theme-light .flow-dot-1 { opacity: 0.45; }
+    .flow-bg.theme-light .flow-dot-2 { opacity: 0.32; }
+    .flow-bg.theme-light .flow-dot-3 { opacity: 0.20; }
+
     /* ── BUTTON GLOW / SWEEP (shared mechanism) ── */
     .nav-cta, .btn-wa-hero, .btn-wa, .btn-wa-final, .float-wa {
       position: relative;
@@ -193,33 +222,6 @@
         linear-gradient(90deg, rgba(45,107,228,0.04) 1px, transparent 1px);
       background-size: 60px 60px;
       pointer-events: none;
-    }
-
-    /* Linha de fluxo — assinatura visual, eco do corte diagonal da logo */
-    .hero-flow {
-      position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-      z-index: 0;
-      pointer-events: none;
-    }
-    .hero-flow .flow-draw {
-      opacity: 0.5;
-      stroke-dashoffset: var(--flow-len, 1600);
-      transition: stroke-dashoffset 1.8s var(--ease-flow);
-    }
-    .hero-flow.drawn .flow-draw { stroke-dashoffset: 0; }
-    .hero-flow .flow-pulse {
-      opacity: 0;
-      transition: opacity 1s ease;
-    }
-    .hero-flow.drawn .flow-pulse {
-      opacity: 0.8;
-      animation: flowPulse 5.5s linear infinite;
-    }
-    @keyframes flowPulse {
-      to { stroke-dashoffset: calc(var(--flow-len, 1600) * -2); }
     }
 
     .hero-inner {
@@ -389,7 +391,7 @@
     .sec-header.center .sec-sub { margin: 0 auto; }
 
     /* ── DOR ── */
-    #dor { background: var(--white); }
+    #dor { background: var(--white); position: relative; overflow: hidden; }
 
     .dor-grid {
       display: grid;
@@ -433,7 +435,7 @@
     }
 
     /* ── SOLUÇÃO ── */
-    #solucao { background: var(--navy); }
+    #solucao { background: var(--navy); position: relative; overflow: hidden; }
 
     .solucao-inner {
       display: grid;
@@ -544,7 +546,7 @@
     }
 
     /* ── COMO FUNCIONA ── */
-    #como { background: var(--gray); }
+    #como { background: var(--gray); position: relative; overflow: hidden; }
 
     .steps-grid {
       display: grid;
@@ -627,8 +629,45 @@
       animation-play-state: paused;
     }
 
+    /* ── FUNDADOR ── */
+    #fundador { background: var(--navy); position: relative; overflow: hidden; }
+
+    .fundador-inner {
+      display: grid;
+      grid-template-columns: 0.85fr 1.15fr;
+      gap: 64px;
+      align-items: center;
+    }
+
+    .fundador-photo img {
+      width: 100%;
+      aspect-ratio: 4 / 5;
+      object-fit: cover;
+      border-radius: 20px;
+      border: 1px solid rgba(255,255,255,0.12);
+      box-shadow: 0 24px 60px rgba(0,0,0,0.45), 0 0 40px rgba(45,107,228,0.12);
+      display: block;
+    }
+
+    .fundador-text .sec-tag { color: #90BBFF; }
+    .fundador-text .sec-title { color: var(--white); }
+    .fundador-text .sec-sub { color: rgba(255,255,255,0.55); max-width: 480px; }
+    .fundador-role {
+      color: var(--blue);
+      font-weight: 700;
+      font-size: 1.05rem;
+      margin-top: -6px;
+      margin-bottom: 18px;
+    }
+    .fundador-skills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 28px;
+    }
+
     /* ── PROVA SOCIAL ── */
-    #prova { background: var(--white); }
+    #prova { background: var(--white); position: relative; overflow: hidden; }
 
     .depo-grid {
       display: grid;
@@ -893,6 +932,8 @@
       .solucao-right   { order: -1; }
       .steps-grid      { grid-template-columns: 1fr 1fr; gap: 44px; }
       .steps-grid::before { display: none; }
+      .fundador-inner  { grid-template-columns: 1fr; gap: 40px; }
+      .fundador-photo img { max-width: 340px; margin: 0 auto; }
       .depo-grid       { grid-template-columns: 1fr; max-width: 480px; margin: 0 auto; }
       .footer-top      { flex-direction: column; }
     }
@@ -915,17 +956,10 @@
       }
       .hero-badge-dot,
       .float-wa, .float-wa-ring,
-      .btn-wa-hero, .btn-wa, .btn-wa-final,
-      .flow-pulse {
+      .btn-wa-hero, .btn-wa, .btn-wa-final {
         animation: none !important;
       }
       #hero::before, #hero::after { animation: none !important; transform: none !important; }
-      .hero-flow .flow-draw {
-        transition: none !important;
-        stroke-dashoffset: 0 !important;
-        opacity: 0.4 !important;
-      }
-      .hero-flow .flow-pulse { opacity: 0 !important; }
       .steps-grid::before {
         transition: none !important;
         transform: scaleX(1) !important;
@@ -973,22 +1007,6 @@
   <!-- ══ HERO ══ -->
   <section id="hero">
     <div class="hero-grid-deco"></div>
-    <svg class="hero-flow" viewBox="0 0 1000 420" preserveAspectRatio="none" aria-hidden="true" focusable="false">
-      <defs>
-        <linearGradient id="flowLineGrad" x1="0%" y1="100%" x2="100%" y2="0%">
-          <stop offset="0%" stop-color="#2D6BE4" stop-opacity="0"/>
-          <stop offset="50%" stop-color="#2D6BE4" stop-opacity="0.55"/>
-          <stop offset="100%" stop-color="#90BBFF" stop-opacity="0.85"/>
-        </linearGradient>
-        <linearGradient id="flowPulseGrad" x1="0%" y1="100%" x2="100%" y2="0%">
-          <stop offset="0%" stop-color="#90BBFF" stop-opacity="0"/>
-          <stop offset="50%" stop-color="#90BBFF" stop-opacity="1"/>
-          <stop offset="100%" stop-color="#90BBFF" stop-opacity="0"/>
-        </linearGradient>
-      </defs>
-      <path class="flow-draw" d="M -20,330 C 260,280 380,160 560,140 C 740,120 840,30 1020,0" fill="none" stroke="url(#flowLineGrad)" stroke-width="2.4" stroke-linecap="round"/>
-      <path class="flow-pulse" d="M -20,330 C 260,280 380,160 560,140 C 740,120 840,30 1020,0" fill="none" stroke="url(#flowPulseGrad)" stroke-width="3.2" stroke-linecap="round"/>
-    </svg>
     <div class="hero-inner">
       <div class="hero-badge reveal">
         <span class="hero-badge-dot"></span>
@@ -1161,6 +1179,28 @@
     </div>
   </section>
 
+  <!-- ══ FUNDADOR ══ -->
+  <section id="fundador">
+    <div class="container">
+      <div class="fundador-inner">
+        <div class="fundador-photo reveal-left">
+          <img src="carlos-foto.jpg" alt="Carlos Silva, fundador da Draviq" />
+        </div>
+        <div class="fundador-text reveal-right">
+          <span class="sec-tag">Quem está por trás da Draviq</span>
+          <h2 class="sec-title">Carlos Silva</h2>
+          <p class="fundador-role">Fundador da Draviq</p>
+          <p class="sec-sub">Sou gestor de tráfego, copywriter e cuido pessoalmente de estruturar o processo comercial de cada cliente — do anúncio que atrai até o funil que transforma contato em venda.</p>
+          <div class="fundador-skills">
+            <div class="pilar"><span class="pilar-dot"></span>Gestor de Tráfego</div>
+            <div class="pilar"><span class="pilar-dot"></span>Copywriter</div>
+            <div class="pilar"><span class="pilar-dot"></span>Processos de Vendas e Funil</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- ══ PROVA SOCIAL ══ -->
   <section id="prova">
     <div class="container">
@@ -1276,24 +1316,51 @@
   </a>
 
   <script>
+    // Fluxo Draviq — componente de fundo reutilizável, presente em toda seção
+    // 3 camadas disponíveis (curva + partículas em velocidades diferentes via animateMotion);
+    // cada seção usa 1, 2 ou 3 camadas — constante na identidade, variável na intensidade.
+    const FLOW_LAYERS = [
+      { d: 'M -150,150 C 50,90 200,210 400,150 S 800,90 1000,150 S 1400,90 1590,150', width: 2,   dur: 6,  particles: [{ r: 3, begin: 0 }, { r: 2, begin: -2 }, { r: 2.5, begin: -4 }] },
+      { d: 'M -150,100 C 100,170 300,40 550,110 S 950,180 1150,100 S 1500,40 1590,100', width: 1.5, dur: 8,  particles: [{ r: 2, begin: 0 }, { r: 1.5, begin: -3 }] },
+      { d: 'M -150,60 C 80,30 220,90 450,55 S 850,15 1050,55 S 1450,15 1590,55', width: 1,   dur: 10, particles: [{ r: 1.5, begin: 0 }, { r: 1, begin: -5 }] }
+    ];
+    const FLOW_REDUCED_MOTION = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    function buildFlowBg(theme, layerCount) {
+      const svgInner = FLOW_LAYERS.slice(0, layerCount).map((layer, i) => {
+        const n = i + 1;
+        const dots = FLOW_REDUCED_MOTION ? '' : layer.particles.map(p =>
+          `<circle class="flow-dot flow-dot-${n}" r="${p.r}"><animateMotion dur="${layer.dur}s" begin="${p.begin}s" repeatCount="indefinite" path="${layer.d}"/></circle>`
+        ).join('');
+        return `<path class="flow-line flow-line-${n}" d="${layer.d}" stroke-width="${layer.width}"/>${dots}`;
+      }).join('');
+
+      const wrap = document.createElement('div');
+      wrap.className = 'flow-bg' + (theme === 'light' ? ' theme-light' : '');
+      wrap.setAttribute('aria-hidden', 'true');
+      wrap.innerHTML = `<svg viewBox="0 0 1440 240" preserveAspectRatio="none" focusable="false">${svgInner}</svg>`;
+      return wrap;
+    }
+    [
+      ['hero', 'dark', 3],
+      ['dor', 'light', 1],
+      ['solucao', 'dark', 2],
+      ['como', 'light', 1],
+      ['fundador', 'dark', 1],
+      ['prova', 'light', 1],
+      ['cta-final', 'dark', 3]
+    ].forEach(([id, theme, layerCount]) => {
+      const section = document.getElementById(id);
+      if (section) section.prepend(buildFlowBg(theme, layerCount));
+    });
+
     const navbar = document.getElementById('navbar');
     window.addEventListener('scroll', () => {
       navbar.classList.toggle('scrolled', window.scrollY > 20);
     }, { passive: true });
 
-    // Linha de fluxo do Hero — mede o comprimento real do path uma única vez
-    const flowDraw = document.querySelector('.flow-draw');
-    const flowPulse = document.querySelector('.flow-pulse');
-    const heroFlow = document.querySelector('.hero-flow');
-    if (flowDraw && flowPulse && heroFlow) {
-      const len = Math.ceil(flowDraw.getTotalLength());
-      flowDraw.style.strokeDasharray = String(len);
-      flowPulse.style.strokeDasharray = `${Math.max(40, Math.round(len * 0.05))} ${len * 2}`;
-      heroFlow.style.setProperty('--flow-len', len);
-    }
-
     const revealEls = document.querySelectorAll('.reveal, .reveal-left, .reveal-right');
-    const drawEls = document.querySelectorAll('.hero-flow, .steps-grid.line-draw');
+    const drawEls = document.querySelectorAll('.steps-grid.line-draw');
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
